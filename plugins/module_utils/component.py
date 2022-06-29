@@ -114,7 +114,7 @@ class SemaphoreComponent:
             if component:
 
                 # Prepare URL
-                url = url + '/' + component["id"]
+                url = url + '/' + str(component["id"])
 
                 # Prepare attributes
                 self.attrs["id"] = component["id"]
@@ -189,7 +189,7 @@ class SemaphoreComponent:
             return self.module.exit_json(changed=False)
 
         # Component URL
-        url = self.__url + self.path + '/' + component["id"]
+        url = self.__url + self.path + '/' + str(component["id"])
 
         # Catch requests exceptions
         try:
