@@ -131,7 +131,10 @@ class SemaphoreComponent:
                 if ret.status_code not in [204]:
                     self.module.fail_json(
                         changed=False,
-                        msg=f"Unexpected response code {ret.status_code} from server. Response was: {ret.text}",
+                        msg=f"Unexpected response code {ret.status_code} from server.",
+                        error=ret.text,
+                        url=url,
+                        attrs=self.attrs
                     )
 
                 # Update component
@@ -154,7 +157,10 @@ class SemaphoreComponent:
                 if ret.status_code not in [201]:
                     self.module.fail_json(
                         changed=False,
-                        msg=f"Unexpected response code {ret.status_code} from server. Response was: {ret.text}",
+                        msg=f"Unexpected response code {ret.status_code} from server.",
+                        error=ret.text,
+                        url=url,
+                        attrs=self.attrs
                     )
 
                 # Read result
@@ -196,7 +202,9 @@ class SemaphoreComponent:
             if ret.status_code not in [204]:
                 self.module.fail_json(
                     changed=False,
-                    msg=f"Unexpected response code {ret.status_code} from server. Response was: {ret.text}",
+                    msg=f"Unexpected response code {ret.status_code} from server.",
+                    error=ret.text,
+                    url=url
                 )
 
             # Return
