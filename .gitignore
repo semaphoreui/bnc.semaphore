@@ -1,3 +1,5 @@
 .venv
 tests/output
 *.pyc
+__pycache__
+.collections

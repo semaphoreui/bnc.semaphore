@@ -1,1 +1,1 @@
-* Ansible Semaphore module
+# Ansible Semaphore module

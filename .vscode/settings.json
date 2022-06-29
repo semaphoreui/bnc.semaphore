@@ -1,0 +1,14 @@
+{
+    "python.analysis.extraPaths": [
+        ".collections"
+    ],
+    "python.linting.pylintEnabled": true,
+    "python.linting.pylintArgs": [
+        "--enable=W0611",
+        "--disable=C0114",
+        "-j 8"
+    ],
+    "workbench.tree.indent": 32,
+    "python.formatting.provider": "black",
+    "python.linting.pylintPath": ".venv/bin/pylint",
+}
