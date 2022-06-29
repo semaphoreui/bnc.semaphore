@@ -240,4 +240,4 @@ class SemaphoreProjectComponent(SemaphoreComponent):
         super().__init__(module)
 
         # Update path
-        self.path = f"/project/{self.attrs.project_id}{self.path}"
+        self.path = f"/project/{self.attrs['project_id']}{self.path}"
