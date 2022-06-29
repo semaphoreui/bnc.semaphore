@@ -9,11 +9,6 @@ except ImportError as e:
     MISSING_LIBRARY = "requests"
     MISSING_LIBRARY_E = e
 
-try:
-    from yarl import URL
-except ImportError as e:
-    MISSING_LIBRARY = "yarl"
-    MISSING_LIBRARY_E = e
 
 from ansible.module_utils.basic import missing_required_lib
 
@@ -64,7 +59,7 @@ class SemaphoreComponent:
     def get_components(self):
 
         # Component URL
-        url = URL(self.__url) / self.path
+        url = self.__url + self.path
 
         # Perform request
         try:
@@ -107,7 +102,7 @@ class SemaphoreComponent:
     def create_or_update(self):
 
         # Component URL
-        url = URL(self.__url) / self.path
+        url = self.__url + self.path
 
         # Check for existing component by name
         component = self.get_component(self.attrs["name"])
@@ -119,7 +114,7 @@ class SemaphoreComponent:
             if component:
 
                 # Prepare URL
-                url = url / component["id"]
+                url = url + '/' + component["id"]
 
                 # Prepare attributes
                 self.attrs["id"] = component["id"]
@@ -194,7 +189,7 @@ class SemaphoreComponent:
             return self.module.exit_json(changed=False)
 
         # Component URL
-        url = URL(self.__url) / self.path / component["id"]
+        url = self.__url + self.path + '/' + component["id"]
 
         # Catch requests exceptions
         try:
