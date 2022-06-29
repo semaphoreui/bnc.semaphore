@@ -81,6 +81,7 @@ class SemaphoreComponent:
                 msg=f"Unexpected response code {ret.status_code} from server.",
                 error=ret.text,
                 url=str(url),
+                path=self.path,
                 method="GET"
             )
 
