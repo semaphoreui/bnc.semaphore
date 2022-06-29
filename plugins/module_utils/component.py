@@ -34,7 +34,7 @@ class SemaphoreComponent:
     __url: str
 
     # URL path for component
-    __path = "/"
+    __path = ""
 
     # Auth token for API
     __token: str
