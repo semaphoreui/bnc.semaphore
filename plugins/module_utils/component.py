@@ -80,7 +80,7 @@ class SemaphoreComponent:
                 changed=False,
                 msg=f"Unexpected response code {ret.status_code} from server.",
                 error=ret.text,
-                url=url,
+                url=str(url),
                 method="GET"
             )
 
@@ -136,7 +136,7 @@ class SemaphoreComponent:
                         changed=False,
                         msg=f"Unexpected response code {ret.status_code} from server.",
                         error=ret.text,
-                        url=url,
+                        url=str(url),
                         attrs=self.attrs,
                         method="PUT"
                     )
@@ -163,7 +163,7 @@ class SemaphoreComponent:
                         changed=False,
                         msg=f"Unexpected response code {ret.status_code} from server.",
                         error=ret.text,
-                        url=url,
+                        url=str(url),
                         attrs=self.attrs,
                         method="POST"
                     )
@@ -209,7 +209,7 @@ class SemaphoreComponent:
                     changed=False,
                     msg=f"Unexpected response code {ret.status_code} from server.",
                     error=ret.text,
-                    url=url,
+                    url=str(url),
                     method="DELETE"
                 )
 
