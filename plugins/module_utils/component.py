@@ -1,5 +1,8 @@
 from __future__ import absolute_import, division, print_function
 
+MISSING_LIBRARY = None
+MISSING_LIBRARY_E = None
+
 try:
     import requests
 except ImportError as e:
