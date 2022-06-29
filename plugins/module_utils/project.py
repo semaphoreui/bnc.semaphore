@@ -12,4 +12,4 @@ class SemaphoreProject(SemaphoreComponent):
 
     # URL path for component
     # pylint: disable=unused-private-member
-    path = '/projects'
+    path = '/project'

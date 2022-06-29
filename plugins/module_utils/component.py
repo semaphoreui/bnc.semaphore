@@ -61,6 +61,10 @@ class SemaphoreComponent:
         # Component URL
         url = self.__url + self.path
 
+        # Workaround for inconsistency in Semaphore's API
+        if self.path == '/project':
+            url += 's'
+
         # Perform request
         try:
             ret = requests.get(url, headers={"Authorization": f"Bearer {self.__token}"})
