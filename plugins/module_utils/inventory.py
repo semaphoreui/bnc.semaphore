@@ -12,7 +12,7 @@ class SemaphoreInventory(SemaphoreProjectComponent):
 
     # URL path for component
     # pylint: disable=unused-private-member
-    __path = '/inventory'
+    path = '/inventory'
 
     # Attributes
     attrs = SemaphoreProjectComponent.attrs | {

@@ -34,7 +34,7 @@ class SemaphoreComponent:
     __url: str
 
     # URL path for component
-    __path = ""
+    path = ""
 
     # Auth token for API
     __token: str
@@ -64,7 +64,7 @@ class SemaphoreComponent:
     def get_components(self):
 
         # Component URL
-        url = URL(self.__url) / self.__path
+        url = URL(self.__url) / self.path
 
         # Perform request
         try:
@@ -106,7 +106,7 @@ class SemaphoreComponent:
     def create_or_update(self):
 
         # Component URL
-        url = URL(self.__url) / self.__path
+        url = URL(self.__url) / self.path
 
         # Check for existing component by name
         component = self.get_component(self.attrs["name"])
@@ -193,7 +193,7 @@ class SemaphoreComponent:
             return self.module.exit_json(changed=False)
 
         # Component URL
-        url = URL(self.__url) / self.__path / component["id"]
+        url = URL(self.__url) / self.path / component["id"]
 
         # Catch requests exceptions
         try:
@@ -232,4 +232,4 @@ class SemaphoreProjectComponent(SemaphoreComponent):
         super().__init__(module)
 
         # Update path
-        self.__path = f"/project/{self.attrs.project_id}{self.__path}"
+        self.path = f"/project/{self.attrs.project_id}{self.path}"
