@@ -117,6 +117,14 @@ class SemaphoreComponent:
             # If component already exist, we try to update
             if component:
 
+                # Check if changes happend
+                changed = False
+                for key, value in self.attrs.items():
+                    if value != component[key]:
+                        changed = True
+                if not changed:
+                    return self.module.exit_json(changed=False, result=component)
+
                 # Prepare URL
                 url = url + '/' + str(component["id"])
 
