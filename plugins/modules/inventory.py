@@ -35,6 +35,10 @@ options:
     choices:
       - static
       - file
+  inventory:
+    type: str
+    description: Content of inventory or path to inventory file
+    required: True
 extends_documentation_fragment:
   - bnc.semaphore.component
   - bnc.semaphore.project_component
@@ -71,7 +75,8 @@ def main():
             url=dict(type="str", required=True),
             token=dict(type="str", required=True, no_log=True),
             project_id=dict(type="int", required=True),
-            type=dict(type="str", required=True, choices=["static", "file"])
+            type=dict(type="str", required=True, choices=["static", "file"]),
+            inventory=dict(type="str", required=True)
         )
     )
 
