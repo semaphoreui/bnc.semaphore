@@ -66,14 +66,7 @@ def main():
 
     # Defer to project class
     semaphore = SemaphoreProject(module)
-    if semaphore.state == "present":
-        semaphore.create_or_update()
-    elif semaphore.state == "absent":
-        semaphore.ensure_removed()
-    else:
-        module.fail_json(
-            changed=False, msg=f"Invalid state requested: {semaphore.state}"
-        )
+    semaphore.handle()
 
 
 if __name__ == "__main__":

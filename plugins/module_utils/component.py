@@ -229,6 +229,18 @@ class SemaphoreComponent:
                 changed=False, msg=f"An error occured while performing the request: {e}"
             )
 
+    # Handle usage
+    def handle(self):
+
+        if self.state == "present":
+            self.create_or_update()
+        elif self.state == "absent":
+            self.ensure_removed()
+        else:
+            self.module.fail_json(
+                changed=False, msg=f"Invalid state requested: {self.state}"
+            )
+
 
 class SemaphoreProjectComponent(SemaphoreComponent):
 
