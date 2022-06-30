@@ -12,10 +12,10 @@ class SemaphoreInventory(SemaphoreProjectComponent):
 
     # URL path for component
     # pylint: disable=unused-private-member
-    path = '/inventory'
+    path = "/inventory"
 
-    # Attributes
-    attrs = SemaphoreProjectComponent.attrs | {
-        "inventory": str,
-        "type": str
-    }
+    # Ansible module argument_spec
+    argument_spec = SemaphoreProjectComponent.argument_spec | dict(
+        type=dict(type="str", required=True, choices=["static", "file"]),
+        inventory=dict(type="str", required=True),
+    )

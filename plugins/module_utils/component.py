@@ -19,9 +19,6 @@ __metaclass__ = type
 
 class SemaphoreComponent:
 
-    # API attributes
-    attrs = {"name": str}
-
     # Expected state of the component
     state = "present"
 
@@ -33,6 +30,17 @@ class SemaphoreComponent:
 
     # Auth token for API
     __token: str
+
+    # Ansible module argument_spec
+    argument_spec = dict(
+        name=dict(type="str", required=True),
+        state=dict(type="str", default="present", choices=["present", "absent"]),
+        url=dict(type="str", required=True),
+        token=dict(type="str", required=True, no_log=True),
+    )
+
+    # Store attributes values
+    attributes = {}
 
     # Constructor
     def __init__(self, module):
@@ -52,8 +60,8 @@ class SemaphoreComponent:
         self.state = module.params.get("state")
 
         # Extract attributes
-        for key in self.attrs.keys():
-            self.attrs[key] = module.params.get(key)
+        for key in self.argument_spec.keys():
+            self.attributes[key] = module.params.get(key)
 
     # Get list of components from Semaphore
     def get_components(self):
@@ -112,7 +120,7 @@ class SemaphoreComponent:
         url = self.__url + self.path
 
         # Check for existing component by name
-        component = self.get_component(self.attrs["name"])
+        component = self.get_component(self.attributes["name"])
 
         # Catch requests exceptions
         try:
@@ -122,7 +130,7 @@ class SemaphoreComponent:
 
                 # Check if changes happend
                 changed = False
-                for key, value in self.attrs.items():
+                for key, value in self.attributes.items():
                     if value != component[key]:
                         changed = True
                 if not changed:
@@ -132,12 +140,12 @@ class SemaphoreComponent:
                 url = url + '/' + str(component["id"]) + '/'
 
                 # Prepare attributes
-                self.attrs["id"] = component["id"]
+                self.attributes["id"] = component["id"]
 
                 # Make PUT request
                 ret = requests.put(
                     url,
-                    json=self.attrs,
+                    json=self.attributes,
                     headers={"Authorization": f"Bearer {self.__token}"},
                 )
 
@@ -148,7 +156,7 @@ class SemaphoreComponent:
                         msg=f"Unexpected response code {ret.status_code} from server.",
                         error=ret.text,
                         url=str(url),
-                        attrs=self.attrs,
+                        attrs=self.attributes,
                         method="PUT"
                     )
 
@@ -171,7 +179,7 @@ class SemaphoreComponent:
                 # Make POST request
                 ret = requests.post(
                     url,
-                    json=self.attrs,
+                    json=self.attributes,
                     headers={"Authorization": f"Bearer {self.__token}"},
                 )
 
@@ -182,7 +190,7 @@ class SemaphoreComponent:
                         msg=f"Unexpected response code {ret.status_code} from server.",
                         error=ret.text,
                         url=str(url),
-                        attrs=self.attrs,
+                        attrs=self.attributes,
                         method="POST"
                     )
 
@@ -206,7 +214,7 @@ class SemaphoreComponent:
     def ensure_removed(self):
 
         # Check if component exists
-        component = self.get_component(self.attrs["name"])
+        component = self.get_component(self.attributes["name"])
         if not component:
             return self.module.exit_json(changed=False)
 
@@ -254,12 +262,14 @@ class SemaphoreComponent:
 
 class SemaphoreProjectComponent(SemaphoreComponent):
 
-    # API attributes
-    attrs = SemaphoreComponent.attrs | {"project_id": int}
+    # Ansible module argument_spec
+    argument_spec = SemaphoreComponent.argument_spec | dict(
+        project_id=dict(type="int", required=True),
+    )
 
     # Constructor
     def __init__(self, module):
         super().__init__(module)
 
         # Update path
-        self.path = f"/project/{self.attrs['project_id']}{self.path}"
+        self.path = f"/project/{self.attributes['project_id']}{self.path}"

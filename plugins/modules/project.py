@@ -55,14 +55,7 @@ def main():
     """
 
     # Ansible module
-    module = AnsibleModule(
-        argument_spec=dict(
-            name=dict(type="str", required=True),
-            state=dict(type="str", default="present", choices=["present", "absent"]),
-            url=dict(type="str", required=True),
-            token=dict(type="str", required=True, no_log=True),
-        )
-    )
+    module = AnsibleModule(argument_spec=SemaphoreProject.argument_spec)
 
     # Defer to project class
     semaphore = SemaphoreProject(module)

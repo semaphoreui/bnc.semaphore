@@ -102,37 +102,7 @@ def main():
     """
 
     # Ansible module
-    module = AnsibleModule(
-        argument_spec=dict(
-            name=dict(type="str", required=True),
-            state=dict(type="str", default="present", choices=["present", "absent"]),
-            url=dict(type="str", required=True),
-            token=dict(type="str", required=True, no_log=True),
-            project_id=dict(type="int", required=True),
-            type=dict(
-                type="str", required=True, choices=["none", "ssh", "login_password"]
-            ),
-            ssh=dict(
-                type="dict",
-                required=False,
-                options=dict(
-                    login=dict(type="str", required=False),
-                    passphrase=dict(type="str", required=False, no_log=True),
-                    private_key=dict(type="str", required=True, no_log=True),
-                ),
-            ),
-            login_password=dict(
-                type="dict",
-                required=False,
-                options=dict(
-                    login=dict(type="str", required=True),
-                    password=dict(type="str", required=True, no_log=True),
-                ),
-                no_log=False,
-            ),
-            override_secret=dict(type="bool", default=True)
-        )
-    )
+    module = AnsibleModule(argument_spec=SemaphoreKey.argument_spec)
 
     # Defer to project class
     semaphore = SemaphoreKey(module)

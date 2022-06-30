@@ -14,8 +14,8 @@ class SemaphoreEnvironment(SemaphoreProjectComponent):
     # pylint: disable=unused-private-member
     path = "/environment"
 
-    # Attributes
-    attrs = SemaphoreProjectComponent.attrs | {
-        "password": str,
-        "json": str,
-    }
+    # Ansible module argument_spec
+    argument_spec = SemaphoreProjectComponent.argument_spec | dict(
+        password=dict(type="str", required=False, no_log=True),
+        json=dict(type="json", required=True),
+    )

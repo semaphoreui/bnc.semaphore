@@ -67,15 +67,7 @@ def main():
 
     # Ansible module
     module = AnsibleModule(
-        argument_spec=dict(
-            name=dict(type="str", required=True),
-            state=dict(type="str", default="present", choices=["present", "absent"]),
-            url=dict(type="str", required=True),
-            token=dict(type="str", required=True, no_log=True),
-            project_id=dict(type="int", required=True),
-            password=dict(type="str", required=False, no_log=True),
-            json=dict(type="json", required=True),
-        )
+        argument_spec=SemaphoreEnvironment.argument_spec
     )
 
     # Defer to project class

@@ -14,9 +14,9 @@ class SemaphoreRepository(SemaphoreProjectComponent):
     # pylint: disable=unused-private-member
     path = "/repositories"
 
-    # Attributes
-    attrs = SemaphoreProjectComponent.attrs | {
-        "git_url": str,
-        "git_branch": str,
-        "ssh_key_id": int
-    }
+    # Ansible module argument_spec
+    argument_spec = SemaphoreProjectComponent.argument_spec | dict(
+        git_url=dict(type="str", required=True),
+        git_branch=dict(type="str", required=True),
+        ssh_key_id=dict(type="int", required=True),
+    )

@@ -72,18 +72,7 @@ def main():
     """
 
     # Ansible module
-    module = AnsibleModule(
-        argument_spec=dict(
-            name=dict(type="str", required=True),
-            state=dict(type="str", default="present", choices=["present", "absent"]),
-            url=dict(type="str", required=True),
-            token=dict(type="str", required=True, no_log=True),
-            project_id=dict(type="int", required=True),
-            git_url=dict(type="str", required=True),
-            git_branch=dict(type="str", required=True),
-            ssh_key_id=dict(type="int", required=True),
-        )
-    )
+    module = AnsibleModule(argument_spec=SemaphoreRepository.argument_spec)
 
     # Defer to project class
     semaphore = SemaphoreRepository(module)
