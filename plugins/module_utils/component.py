@@ -61,7 +61,8 @@ class SemaphoreComponent:
 
         # Extract attributes
         for key in self.argument_spec.keys():
-            self.attributes[key] = module.params.get(key)
+            if key not in ['url', 'state', 'token']:
+                self.attributes[key] = module.params.get(key)
 
     # Get list of components from Semaphore
     def get_components(self):
