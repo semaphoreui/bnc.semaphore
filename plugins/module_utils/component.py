@@ -5,9 +5,9 @@ MISSING_LIBRARY_E = None
 
 try:
     import requests
-except ImportError as e:
+except ImportError as import_error:
     MISSING_LIBRARY = "requests"
-    MISSING_LIBRARY_E = e
+    MISSING_LIBRARY_E = import_error
 
 
 from ansible.module_utils.basic import missing_required_lib
@@ -90,8 +90,8 @@ class SemaphoreComponent:
         # Read result
         try:
             components = ret.json()
-        except requests.RequestException as e:
-            self.module.fail_json(changed=False, msg=f"Cannot read returned JSON: {e}")
+        except Exception as e:
+            self.module.fail_json(changed=False, msg=f"Cannot read returned JSON ({ret.text}): {e}")
 
         # Return
         return components
@@ -189,9 +189,9 @@ class SemaphoreComponent:
                 # Read result
                 try:
                     component = ret.json()
-                except requests.RequestException as e:
+                except Exception as e:
                     self.module.fail_json(
-                        changed=False, msg=f"Cannot read returned JSON: {e}"
+                        changed=False, msg=f"Cannot read returned JSON ({ret.text}): {e}"
                     )
 
                 # Return
