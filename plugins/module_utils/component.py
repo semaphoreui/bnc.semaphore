@@ -139,7 +139,7 @@ class SemaphoreComponent:
                 )
 
                 # Check result
-                if ret.status_code not in [204]:
+                if ret.status_code not in [201, 204]:
                     self.module.fail_json(
                         changed=False,
                         msg=f"Unexpected response code {ret.status_code} from server.",
@@ -166,7 +166,7 @@ class SemaphoreComponent:
                 )
 
                 # Check result
-                if ret.status_code not in [201]:
+                if ret.status_code not in [201, 204]:
                     self.module.fail_json(
                         changed=False,
                         msg=f"Unexpected response code {ret.status_code} from server.",
@@ -212,7 +212,7 @@ class SemaphoreComponent:
             )
 
             # Check result
-            if ret.status_code not in [204]:
+            if ret.status_code not in [201, 204]:
                 self.module.fail_json(
                     changed=False,
                     msg=f"Unexpected response code {ret.status_code} from server.",
