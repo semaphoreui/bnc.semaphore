@@ -25,5 +25,6 @@ class SemaphoreKey(SemaphoreProjectComponent):
         "login_password": {
             "login": str,
             "password": str
-        }
+        },
+        "override_secret": True
     }
