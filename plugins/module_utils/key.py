@@ -18,6 +18,12 @@ class SemaphoreKey(SemaphoreProjectComponent):
     attrs = SemaphoreProjectComponent.attrs | {
         "type": str,
         "ssh": {
+            "login": str,
+            "passphare": str,
             "private_key": str
+        },
+        "login_password": {
+            "login": str,
+            "password": str
         }
     }

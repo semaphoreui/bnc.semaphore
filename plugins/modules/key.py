@@ -36,11 +36,32 @@ options:
       - none
       - ssh
       - login_password
+  login_password:
+    type: dict
+    description: Login credentials when key's type is login_password
+    required: false
+    suboptions:
+      login:
+        type: str
+        description: Username
+        required: true
+      password:
+        type: str
+        description: Password
+        required: true
   ssh:
     type: dict
     description: Key properties when key's type is ssh
     required: false
     suboptions:
+      login:
+        type: str
+        description: Login associated to key
+        required: false
+      passphrase:
+        type: str
+        description: Password of to key
+        required: false
       private_key:
         type: str
         description: Private key content in OpenSSH format
@@ -90,7 +111,20 @@ def main():
             ssh=dict(
                 type="dict",
                 required=False,
-                options=dict(private_key=dict(type="str", required=True, no_log=True)),
+                options=dict(
+                    login=dict(type="str", required=False),
+                    passphrase=dict(type="str", required=False, no_log=True),
+                    private_key=dict(type="str", required=True, no_log=True),
+                ),
+            ),
+            login_password=dict(
+                type="dict",
+                required=False,
+                options=dict(
+                    login=dict(type="str", required=True),
+                    password=dict(type="str", required=True, no_log=True),
+                ),
+                no_log=False,
             ),
         )
     )
