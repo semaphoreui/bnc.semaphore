@@ -65,6 +65,9 @@ class SemaphoreComponent:
         if self.path == '/project':
             url += 's'
 
+        # Add trailing slash
+        url += '/'
+
         # Perform request
         try:
             ret = requests.get(url, headers={"Authorization": f"Bearer {self.__token}"})
@@ -126,7 +129,7 @@ class SemaphoreComponent:
                     return self.module.exit_json(changed=False, result=component)
 
                 # Prepare URL
-                url = url + '/' + str(component["id"])
+                url = url + '/' + str(component["id"]) + '/'
 
                 # Prepare attributes
                 self.attrs["id"] = component["id"]
@@ -157,6 +160,9 @@ class SemaphoreComponent:
 
             # If not, we create
             else:
+
+                # Prepare URL
+                url += '/'
 
                 # Make POST request
                 ret = requests.post(
@@ -201,7 +207,7 @@ class SemaphoreComponent:
             return self.module.exit_json(changed=False)
 
         # Component URL
-        url = self.__url + self.path + '/' + str(component["id"])
+        url = self.__url + self.path + '/' + str(component["id"]) + '/'
 
         # Catch requests exceptions
         try:
