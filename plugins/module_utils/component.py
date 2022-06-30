@@ -161,6 +161,10 @@ class SemaphoreComponent:
             # If not, we create
             else:
 
+                # Workaround for inconsistency in Semaphore's API
+                if self.path == '/project':
+                    url += 's'
+
                 # Prepare URL
                 url += '/'
 
