@@ -66,6 +66,10 @@ options:
         type: str
         description: Private key content in OpenSSH format
         required: true
+  override_secret:
+    type: bool
+    description: Override existing secrects
+    default: true
 extends_documentation_fragment:
   - bnc.semaphore.component
   - bnc.semaphore.project_component
@@ -126,6 +130,7 @@ def main():
                 ),
                 no_log=False,
             ),
+            override_secret=dict(type="bool", default=True)
         )
     )
 

@@ -12,19 +12,12 @@ class SemaphoreKey(SemaphoreProjectComponent):
 
     # URL path for component
     # pylint: disable=unused-private-member
-    path = '/keys'
+    path = "/keys"
 
     # Attributes
     attrs = SemaphoreProjectComponent.attrs | {
         "type": str,
-        "ssh": {
-            "login": str,
-            "passphare": str,
-            "private_key": str
-        },
-        "login_password": {
-            "login": str,
-            "password": str
-        },
-        "override_secret": True
+        "ssh": {"login": str, "passphare": str, "private_key": str},
+        "login_password": {"login": str, "password": str},
+        "override_secret": bool,
     }
