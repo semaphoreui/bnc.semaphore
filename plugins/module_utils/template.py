@@ -16,7 +16,7 @@ class SemaphoreTemplateTask(SemaphoreProjectComponent):
 
     # Ansible module argument_spec
     argument_spec = SemaphoreProjectComponent.argument_spec | dict(
-        type=dict(type="str", choices=["task", "build", "deploy"], default="task"),
+        type=dict(type="str", choices=["", "build", "deploy"], default=""),
         inventory_id=dict(type="int", required=True),
         repository_id=dict(type="int", required=True),
         environment_id=dict(type="int", required=True),
