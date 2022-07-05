@@ -73,8 +73,8 @@ class SemaphoreComponent:
         # Workarounds for inconsistency in Semaphore's API
         if path == '/project':
             path += 's'
-        if path == '/schedules':
-            path = f'/templates/{self.attributes["template_id"]}/{path}'
+        if path.endswith('/schedules'):
+            path = f'/project/{self.attributes["project_id"]}/templates/{self.attributes["template_id"]}/{path}'
 
         # Component URL
         url = self.__url + path
