@@ -1,4 +1,5 @@
 from __future__ import absolute_import, division, print_function
+from curses.ascii import isdigit
 
 MISSING_LIBRARY = None
 MISSING_LIBRARY_E = None
@@ -111,7 +112,7 @@ class SemaphoreComponent:
         return components
 
     # Search for component in list
-    def get_component(self, name):
+    def get_component(self, name: str):
 
         # Get list of existing components
         components = self.get_components()
@@ -121,7 +122,11 @@ class SemaphoreComponent:
             return next((x for x in components if x["name"] == name), None)
 
         # Fallback to search by ID
-        return next((x for x in components if x["id"] == name), None)
+        if name.isdigit():
+            return next((x for x in components if x["id"] == int(name)), None)
+
+        # Fallback
+        return None
 
     # Create or update component
     def create_or_update(self):
