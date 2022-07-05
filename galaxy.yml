@@ -3,9 +3,9 @@ namespace: bnc
 name: semaphore
 authors:
   - Alexandre Georges <alexandre.georges@bnc.ch> (@mageo)
-version: 0.0.1
+version: 0.1.0
 readme: README.md
-description: Ansible module to interact with Ansible Semaphore API
+description: Ansible collection to interact with Ansible Semaphore API
 license_file: LICENSE
 dependencies: {}
 repository: https://github.com/bnc-ch/bnc.semaphore
