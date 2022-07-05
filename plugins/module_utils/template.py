@@ -8,7 +8,7 @@ from ansible_collections.bnc.semaphore.plugins.module_utils.component import (
 __metaclass__ = type
 
 
-class SemaphoreTemplate(SemaphoreProjectComponent):
+class SemaphoreTemplateTask(SemaphoreProjectComponent):
 
     # URL path for component
     # pylint: disable=unused-private-member
@@ -42,24 +42,18 @@ class SemaphoreTemplate(SemaphoreProjectComponent):
     )
 
 
-class SemaphoreTemplateTask(SemaphoreTemplate):
+class SemaphoreTemplateBuild(SemaphoreTemplateTask):
 
     # Ansible module argument_spec
-    argument_spec = SemaphoreTemplate.argument_spec
-
-
-class SemaphoreTemplateBuild(SemaphoreTemplate):
-
-    # Ansible module argument_spec
-    argument_spec = SemaphoreTemplate.argument_spec | dict(
+    argument_spec = SemaphoreTemplateTask.argument_spec | dict(
         start_version=dict(type="str", required=True),
     )
 
 
-class SemaphoreTemplateDeploy(SemaphoreTemplate):
+class SemaphoreTemplateDeploy(SemaphoreTemplateTask):
 
     # Ansible module argument_spec
-    argument_spec = SemaphoreTemplate.argument_spec | dict(
+    argument_spec = SemaphoreTemplateTask.argument_spec | dict(
         build_template_id=dict(type="int", required=True),
         autorun=dict(type='bool', default=False)
     )
