@@ -148,7 +148,10 @@ class SemaphoreComponent:
                 # Check if changes happend
                 changed = False
                 for key, value in self.attributes.items():
-                    if value != component[key]:
+                    if key == 'name' and 'name' not in component and value.isdigit():
+                        if int(value) != component['id']:
+                            changed = True
+                    elif value != component[key]:
                         changed = True
                 if not changed:
                     return self.module.exit_json(changed=False, result=component)
