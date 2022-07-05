@@ -62,7 +62,7 @@ class SemaphoreComponent:
 
         # Extract attributes
         for key in self.argument_spec.keys():
-            if key not in ['url', 'state', 'token']:
+            if key not in ["url", "state", "token"]:
                 self.attributes[key] = module.params.get(key)
 
     # Get list of components from Semaphore
@@ -72,16 +72,16 @@ class SemaphoreComponent:
         path = self.path
 
         # Workarounds for inconsistency in Semaphore's API
-        if path == '/project':
-            path += 's'
-        if path.endswith('/schedules'):
+        if path == "/project":
+            path += "s"
+        if path.endswith("/schedules"):
             path = f'/project/{self.attributes["project_id"]}/templates/{self.attributes["template_id"]}/schedules'
 
         # Component URL
         url = self.__url + path
 
         # Add trailing slash
-        url += '/'
+        url += "/"
 
         # Perform request
         try:
@@ -99,14 +99,16 @@ class SemaphoreComponent:
                 error=ret.text,
                 url=str(url),
                 path=self.path,
-                method="GET"
+                method="GET",
             )
 
         # Read result
         try:
             components = ret.json()
         except Exception as e:
-            self.module.fail_json(changed=False, msg=f"Cannot read returned JSON ({ret.text}): {e}")
+            self.module.fail_json(
+                changed=False, msg=f"Cannot read returned JSON ({ret.text}): {e}"
+            )
 
         # Return
         return components
@@ -118,7 +120,7 @@ class SemaphoreComponent:
         components = self.get_components()
 
         # Search by name
-        if len(components) > 0 and 'name' in components[0]:
+        if len(components) > 0 and "name" in components[0]:
             return next((x for x in components if x["name"] == name), None)
 
         # Fallback to search by ID
@@ -152,7 +154,7 @@ class SemaphoreComponent:
                     return self.module.exit_json(changed=False, result=component)
 
                 # Prepare URL
-                url = url + '/' + str(component["id"]) + '/'
+                url = url + "/" + str(component["id"]) + "/"
 
                 # Prepare attributes
                 self.attributes["id"] = component["id"]
@@ -172,7 +174,7 @@ class SemaphoreComponent:
                         error=ret.text,
                         url=str(url),
                         attrs=self.attributes,
-                        method="PUT"
+                        method="PUT",
                     )
 
                 # Update component
@@ -185,11 +187,11 @@ class SemaphoreComponent:
             else:
 
                 # Workaround for inconsistency in Semaphore's API
-                if self.path == '/project':
-                    url += 's'
+                if self.path == "/project":
+                    url += "s"
 
                 # Prepare URL
-                url += '/'
+                url += "/"
 
                 # Make POST request
                 ret = requests.post(
@@ -206,7 +208,7 @@ class SemaphoreComponent:
                         error=ret.text,
                         url=str(url),
                         attrs=self.attributes,
-                        method="POST"
+                        method="POST",
                     )
 
                 # Read result
@@ -214,7 +216,8 @@ class SemaphoreComponent:
                     component = ret.json()
                 except Exception as e:
                     self.module.fail_json(
-                        changed=False, msg=f"Cannot read returned JSON ({ret.text}): {e}"
+                        changed=False,
+                        msg=f"Cannot read returned JSON ({ret.text}): {e}",
                     )
 
                 # Return
@@ -234,7 +237,7 @@ class SemaphoreComponent:
             return self.module.exit_json(changed=False)
 
         # Component URL
-        url = self.__url + self.path + '/' + str(component["id"]) + '/'
+        url = self.__url + self.path + "/" + str(component["id"]) + "/"
 
         # Catch requests exceptions
         try:
@@ -251,7 +254,7 @@ class SemaphoreComponent:
                     msg=f"Unexpected response code {ret.status_code} from server.",
                     error=ret.text,
                     url=str(url),
-                    method="DELETE"
+                    method="DELETE",
                 )
 
             # Return
