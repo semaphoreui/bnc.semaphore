@@ -67,12 +67,17 @@ class SemaphoreComponent:
     # Get list of components from Semaphore
     def get_components(self):
 
-        # Component URL
-        url = self.__url + self.path
+        # Path
+        path = self.path
 
-        # Workaround for inconsistency in Semaphore's API
-        if self.path == '/project':
-            url += 's'
+        # Workarounds for inconsistency in Semaphore's API
+        if path == '/project':
+            path += 's'
+        if path == '/schedules':
+            path = f'/templates/{self.attributes["template_id"]}/{path}'
+
+        # Component URL
+        url = self.__url + path
 
         # Add trailing slash
         url += '/'
