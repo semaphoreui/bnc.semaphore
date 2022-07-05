@@ -74,7 +74,7 @@ class SemaphoreComponent:
         if path == '/project':
             path += 's'
         if path.endswith('/schedules'):
-            path = f'/project/{self.attributes["project_id"]}/templates/{self.attributes["template_id"]}/{path}'
+            path = f'/project/{self.attributes["project_id"]}/templates/{self.attributes["template_id"]}/schedules/'
 
         # Component URL
         url = self.__url + path
