@@ -214,14 +214,10 @@ class SemaphoreComponent:
                         method="POST",
                     )
 
-                # Read result
-                try:
-                    component = ret.json()
-                except Exception as e:
-                    self.module.fail_json(
-                        changed=False,
-                        msg=f"Cannot read returned JSON ({ret.text}): {e}",
-                    )
+                # Get creater component
+                component = self.get_component(self.attributes["name"])
+                if not component:
+                    self.module.fail_json(changed=True, msg="Cannot find created component.")
 
                 # Return
                 self.module.exit_json(changed=True, result=component)
