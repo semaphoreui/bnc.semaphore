@@ -116,8 +116,12 @@ class SemaphoreComponent:
         # Get list of existing components
         components = self.get_components()
 
-        # Search by ID
-        return next((x for x in components if x["name"] == name), None)
+        # Search by name
+        if len(components) > 0 and 'name' in components[0]:
+            return next((x for x in components if x["name"] == name), None)
+
+        # Fallback to search by ID
+        return next((x for x in components if x["id"] == name), None)
 
     # Create or update component
     def create_or_update(self):
